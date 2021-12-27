@@ -1,0 +1,98 @@
+@import '../../assets/scss/libs/vars';
+
+$navbarHeight: 60px;
+
+menu {
+  display: flex;
+  width: 300px;
+  flex-flow: column nowrap;
+  top: $navbarHeight;
+  bottom: 0;
+  left: -300px;
+  height: calc(100vh - $navbarHeight);
+  background-color: $color-white;
+  position: absolute !important;
+  z-index: 3;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transform: left;
+  box-shadow: 0 2px 30px 4px rgba(0, 0, 0, 0.35);
+
+  .go-slide-in {
+    animation: goslidein 0.5s forwards;
+  }
+
+  .go-slide-out {
+    animation: goslideout 0.5s forwards;
+  }
+
+  .sidebar-menu {
+    position: relative;
+    margin: 24px 0;
+
+    a {
+      text-decoration: none;
+    }
+
+    .sidebar-item {
+      display: flex;
+      width: 280px;
+      height: 40px;
+      border-radius: 4px;
+      align-items: center;
+      margin: 0 8px 4px 8px;
+    
+      color: #000000;
+      text-decoration: none;
+    
+      .sidebar-item-icon {
+        padding: 0 8px;
+      }
+    
+      .sidebar-item-text {  
+        font-size: 13px;
+        font-weight: normal;
+        line-height: 2.46;
+        letter-spacing: normal;
+      }
+
+      &:hover {
+        background-color: $color-focus;
+      }
+    }      
+  }
+}
+
+.navbar-component {
+  display: block;
+  box-sizing: border-box;
+  align-items: center;
+  width: 100%;
+  height: $navbarHeight;
+  margin: 0;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+  border: solid 1px rgba(0, 0, 0, 0.15);
+  background-color: $color-white;
+  z-index: 2;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  .app-content {
+    display: flex;
+    flex-flow: row nowrap;
+    align-content: center;
+    height: $navbarHeight;
+  }
+
+  .navbar-menu,
+  .navbar-logo,
+  .navbar-logout {
+    display: inline-flex;
+    margin: auto;
+    width: $navbarHeight;
+    height: 30px;
+    font-size: 30px;
+    max-width: $navbarHeight;
+  }
+}

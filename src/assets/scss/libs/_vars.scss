@@ -1,0 +1,53 @@
+// Base.
+$color-primary: rgb(16, 91, 216);
+$color-primary-darker: rgb(11, 61, 145);
+
+$color-base: rgb(33, 33, 33);
+$color-white: rgb(255, 255, 255);
+$color-black: rgb(0, 0, 0);
+
+// Rare.
+$color-primary-alt-darkest: rgb(4, 107, 153);
+$color-primary-alt-dark: rgb(0, 166, 210);
+$color-primary-alt: rgb(2, 191, 231);
+$color-primary-alt-light: rgb(155, 218, 241);
+$color-primary-alt-lightest: rgb(225, 243, 248);
+
+$color-secondary-darkest: rgb(153, 35, 27);
+$color-secondary-dark: rgb(198, 45, 31);
+$color-secondary: rgb(221, 54, 28);
+$color-secondary-light: rgb(229, 152, 146);
+$color-secondary-lightest: rgb(249, 224, 222);
+
+// Background colors.
+$color-gray-dark: rgb(50, 58, 69);
+$color-gray: rgb(91, 97, 107);
+$color-gray-light: rgb(174, 176, 181);
+$color-gray-lighter: rgb(214, 215, 217);
+$color-gray-lightest: rgb(241, 241, 241);
+
+$color-gray-warm-dark:rgb(73, 68, 64);
+$color-gray-warm-light:rgb(228, 226, 224);
+
+$color-primary-darkest:rgb(6, 31, 74);
+$color-gray-cool-light: rgb(220, 228, 239);
+
+// Alerts.
+$color-gold: rgb(255, 157, 30);
+$color-gold-light: rgb(249, 170, 67);
+$color-gold-lighter: rgb(255, 195, 117);
+$color-gold-lightest: rgb(255, 235, 209);
+
+$color-green: rgb(46, 133, 64);
+$color-green-light: rgb(74, 165, 100);
+$color-green-lighter: rgb(148, 191, 162);
+$color-green-lightest: rgb(231, 244, 228);
+
+$color-blue: rgb(32, 84, 147);
+$color-blue-light: rgb(71, 115, 170);
+$color-blue-lighter: rgb(139, 166, 202);
+$color-blue-lightest: $color-gray-cool-light;
+
+// Links.
+$color-focus: $color-gray-light;
+$color-visited: rgb(76, 44, 146);

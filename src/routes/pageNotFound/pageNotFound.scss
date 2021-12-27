@@ -1,0 +1,189 @@
+@import '../../assets/scss/libs/vars';
+
+$contentSize: 640px;
+
+.personal-account-info {
+  display: flex;
+  font-size: 13px;
+  line-height: 1.38;
+  letter-spacing: normal;
+  align-items: center;
+
+  .personal-name {
+    display: flex;
+    text-align: left;
+    align-items: center;
+    margin-left: 32px;
+    padding-left: 8px;
+  }
+}
+
+.personal-account {
+  display: flex;
+  position: relative;
+  width: 787px;
+  height: 429px;
+  margin: 0 auto;
+  background-color: $color-white;
+  top: 66px;
+
+  .img-container {
+    width: 285px;
+    height: 365px;
+
+    .img {
+      width: 285px;
+      height: 365px;
+      background-color: $color-blue-lightest;
+      text-align: center;
+      vertical-align: middle;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        margin: auto;
+      }
+    }
+
+    .icons-container {
+      display: flex;
+      margin: 17px auto 17px 114px;
+
+      .icon {
+        margin-right: 8px;
+      }
+    }
+  }
+
+  .personal-info-container {
+    display: inline-block;
+    width: 482px;
+    padding-left: 32px;
+    font-size: 18px;
+    line-height: 1.22;
+    white-space: nowrap;
+
+    .password-subtitle {
+      justify-content: space-between;
+    }
+
+    .main-info-title {
+      font-size: 18px;
+      font-weight: normal;
+      line-height: 1.22;
+      letter-spacing: normal;
+      margin-bottom: 16px;
+    }
+
+    .personal-account-info {
+      height: 40px;
+      display: flex;
+      font-size: 13px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.38;
+      letter-spacing: normal;
+      align-items: center;
+
+      .personal-subtitle {
+        width: 50px;
+      }
+
+      .personal-name {
+        display: flex;
+        line-height: 40px;
+        width: 380px;
+        text-align: left;
+        align-items: center;
+        padding: 7px;
+        border-bottom: 1px solid $color-gray-light;
+      }
+
+      .personal-email {
+        display: flex;
+        text-align: left;
+        align-items: center;
+        margin-left: 30px;
+        padding-left: 8px;
+
+      }
+
+      .change-email {
+        text-decoration: none;
+        width: 151px;
+        height: 32px;
+        font-size: 13px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 2.46;
+        letter-spacing: normal;
+        text-align: right;
+        color: #2b5092;
+      }
+
+      .password {
+        outline: none;
+        border: none;
+        border-bottom: 1px solid $color-gray-lightest;
+
+        width: 295px;
+        height: 40px;
+        margin-left: 24px;
+      }
+
+      .personal-password {
+        width: 230px;
+        height: 40px;
+        background-color: $color-gray-lightest;
+      }
+
+      div {
+        display: flex;
+      }
+    }
+
+    .password-container {
+      border-bottom: 1px solid $color-gray-lighter;
+    }
+
+    .hr {
+      width: 450px;
+      height: 1px;
+      background-color: $color-gray-lighter;
+      margin-right: 32px;
+    }
+  }
+
+  .hr-name {
+    width: 360px;
+    height: 1px;
+    background-color: $color-gray-lighter;
+    margin-right: 32px;
+  }
+
+  .buttons-container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+
+    .additional {
+      margin-right: 16px;
+    }
+
+    .return {
+      width: 350px;
+    }
+  }
+
+  .account-create {
+    margin: auto;
+
+    .account-create-message {
+      text-align: center;
+    }
+  }
+}

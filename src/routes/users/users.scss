@@ -1,0 +1,80 @@
+.users-page {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+  overflow: hidden;
+
+  .users-table-container {
+    margin-top: 16px;
+    height: 100%;
+  }
+
+  .users-cards-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+  }
+
+  .users-content {
+    height: calc(100% - 112px);
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+.edit-user-menu {
+  display: block;
+  position: fixed;
+  flex-flow: column nowrap;
+  width: 182px;
+  height: 156px;
+  border-radius: 4px;
+  box-shadow: 0 2px 30px 1px rgba(0, 0, 0, 0.2);
+  background-color: $color-main-white;
+  z-index: 1;
+}
+
+.users-buttons-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  height: 30px;
+  margin: 13px 33px 13px 8px;
+
+  .create-users-button,
+  .toggle-view {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .create-users-button {
+    color: $color-main-light-blue;
+  }
+
+  .create-users-text {
+    font-weight: normal;
+    color: $color-main-light-blue;
+    margin-left: 6px;
+  }
+
+  .toggle-view-text {
+    font-weight: normal;
+    line-height: 1.85;
+    color: #000000;
+    margin-right: 16px;
+  }
+}
+
+.users-content {
+  height: 100%;
+
+  .cards-container {
+    display: flex;
+    flex-flow: row wrap;
+    margin: 0 66px;
+    justify-content: space-between;
+  }
+}

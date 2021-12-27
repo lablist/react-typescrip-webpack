@@ -1,0 +1,143 @@
+.go-slide-in {
+  animation: goslidein 0.5s forwards;
+}
+
+@keyframes goslidein {
+  0% { 
+    left: -300px;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+.go-slide-out {
+  animation: goslideout 0.5s forwards;
+}
+
+@keyframes goslideout {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -300px;
+  }
+}
+
+.go-spin {
+  animation: gospin 2s infinite linear;
+}
+
+@keyframes gospin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
+
+.go-fading {
+  animation: gofading 10s infinite;
+}
+
+@keyframes gofading {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.go-opacity {
+  animation: goopacity 0.8s;
+}
+
+@keyframes goopacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.go-top {
+  position: relative;
+  animation: gotop 0.4s;
+}
+
+@keyframes gotop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+.go-left {
+  position: relative;
+  animation: goleft 0.4s;
+}
+
+@keyframes goleft {
+  from {
+    left: -300px;
+    opacity: 0;
+  }
+  to {
+    left: 0;
+    opacity: 1;
+  }
+}
+
+.go-right {
+  position: relative;
+  animation: goright 0.4s;
+}
+
+@keyframes goright {
+  from {
+    right: -300px;
+    opacity: 0;
+  }
+  to {
+    right: 0;
+    opacity: 1;
+  }
+}
+
+.go-bottom {
+  position: relative;
+  animation: gobottom 0.4s;
+}
+@keyframes gobottom {
+  from {
+    bottom: -300px;
+    opacity: 0;
+  }
+  to {
+    bottom: 0;
+    opacity: 1;
+  }
+}
+
+.go-zoom  {
+  animation: gozoom 0.6s;
+}
+
+@keyframes gozoom {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}

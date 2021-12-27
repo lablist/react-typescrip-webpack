@@ -1,0 +1,39 @@
+div, 
+body,
+menu {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: $color-gray-lightest
+  }
+
+  &::-webkit-scrollbar-corner {
+    border-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $color-gray-lighter;
+  }
+
+  &::-webkit-scrollbar-track,
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb,
+  &::-webkit-scrollbar-track {
+    border-radius: 4px;
+  }
+}
+
+body {
+  &::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb,
+  &::-webkit-scrollbar-track {
+    border-radius: 6px;
+  }
+}
