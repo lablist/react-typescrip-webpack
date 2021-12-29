@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useMemo, ChangeEvent } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import _ from "lodash";
 import { NavLink, Outlet } from "react-router-dom";
 import { postQuery } from "../../api/service";
 import useLocalStorage from '../../helpers/useLocalStorage';
 import rights from "../../helpers/rights";
-import "../../assets/scss/main.scss";
 
 export default function Users() {
   const [user, setUser, deleteUser] = useLocalStorage('user', {
@@ -42,7 +41,7 @@ export default function Users() {
   }, [page, limit]);
 
   return (
-    <main style={{ padding: "1rem 0" }}>
+    <div id="users">
       <div className="row user-form">
         <div className="col-2 col-12-small">
           <label htmlFor="user-limit">Показать по:</label>
@@ -78,7 +77,7 @@ export default function Users() {
           {_.map(users, (uData, uDataIndex)=>(<tr key={uData.id}>
               <td>{uDataIndex+1 + calcRows}</td>
               <td>
-                <NavLink to={`/users/${uData.id}`} key={uData.id}>
+                <NavLink to={`/user?userId=${uData.id}`} key={uData.id}>
                   {uData.login}
                 </NavLink>
               </td>
@@ -95,6 +94,6 @@ export default function Users() {
       </table>
       </div>
       <Outlet />
-    </main>
+    </div>
   );
 }

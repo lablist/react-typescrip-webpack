@@ -32,6 +32,11 @@ menu {
 
     a {
       text-decoration: none;
+
+      &.active {
+        background-color: $color-primary-alt;
+      }
+
     }
 
     .sidebar-item {
@@ -94,5 +99,12 @@ menu {
     height: 30px;
     font-size: 30px;
     max-width: $navbarHeight;
+  }
+
+  .navbar-menu {
+    margin-left: 0;
+  }
+  .navbar-logout {
+    margin-right: 0;
   }
 }

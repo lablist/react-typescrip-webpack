@@ -51,15 +51,19 @@ const Navbar: React.FC = () => {
     })
   }, [isOpen]);
 
+  const getNavLinkClassNames = ({ isActive })=> {
+    return `sidebar-item ${isActive ? 'active': ''}`
+  };
+
   return (<>
     <header className="navbar-component">
       <nav>
         <div className="app-content">
+          <span className="icon-menu navbar-menu" onClick={openMenu}></span>
           <span className="icon-logo navbar-logo" onClick={goHome}>
             <span className="path1"></span>
             <span className="path2"></span>
           </span>
-          <span className="icon-menu navbar-menu" onClick={openMenu}></span>
           <span className="icon-logout navbar-logout" onClick={logout}></span>
         </div>
       </nav>
@@ -67,7 +71,8 @@ const Navbar: React.FC = () => {
     <menu className={`${animationClass}`} ref={sideRef}>
       <div className="sidebar-menu">
         {navs.map((navItem, index)=>{
-          return <NavLink className="sidebar-item" key={_.uniqueId(index)} to={`${navItem?.link}`} onClick={linkClick}>
+          return <NavLink className={getNavLinkClassNames}
+        key={_.uniqueId(index)} to={`${navItem?.link}`} onClick={linkClick}>
               <div className="sidebar-item-icon">
                 <span className={`${navItem?.icon}`}></span>
               </div>

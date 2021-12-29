@@ -13,6 +13,7 @@ import Login from "./routes/login";
 import User from "./routes/user";
 import Users from "./routes/users";
 import PageNotFound from "./routes/pageNotFound";
+import "./assets/scss/main.scss";
 
 const rootNode = document.getElementById("root");
 
@@ -25,7 +26,7 @@ render(
           <Route path="/" element={<App />}>
             <Route index element={<Main />}/>
             <Route path="/users" element={<Users />} />
-            <Route path="users/:userId" element={<User />} />
+            <Route path="/user" element={<User />} />
             <Route path="*" element={<PageNotFound/>} />
           </Route>
         </Routes>
