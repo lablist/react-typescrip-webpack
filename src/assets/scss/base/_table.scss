@@ -5,15 +5,16 @@
 table {
   margin: 0 0 2em 0;
   width: 100%;
+  border-collapse: collapse;
 
   tbody {
     tr {
-      border: solid 1px $color-gray-light;
+      border: solid 1px $color-gray-lighter;
       border-left: 0;
       border-right: 0;
 
       &:nth-child(2n + 1) {
-        background-color: $color-blue-lighter;
+        background-color: $color-gray-lightest;
       }
     }
   }
@@ -38,7 +39,6 @@ table {
   }
 
   &.alt {
-    border-collapse: separate;
 
     tbody {
       tr {

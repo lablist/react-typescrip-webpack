@@ -7,7 +7,7 @@ type EventListenable = {
 
 /**
  * Add event listener to html element or elemnts.
- * Example: useEvent(elements, "scroll", onScroll, isCapture);
+ * Example: useEvent(elements, "scroll", onScroll);
  * options:
  * * capture:  Boolean указывает, что события этого типа будут отправлены зарегистрированному слушателю listener перед отправкой на EventTarget, расположенный ниже в дереве DOM.
  * * once: Boolean указывает, что слушатель должен быть вызван не более одного раза после добавления. Если true, слушатель автоматически удаляется при вызове.

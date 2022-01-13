@@ -1,5 +1,64 @@
 @import '../../assets/scss/libs/vars';
 
 #main-page {
-  display: block;
+  display: flex;
+  
+  .scenario-steps-columns {
+    display: flex;
+    position: relative;
+    flex-flow: column nowrap;
+    align-content: flex-start;
+    margin: 8px 0 20px;
+
+    .column-row {
+      display: flex;
+      height: 40px;
+      border-radius: 4px;
+
+      input[type=checkbox] {
+        display: block;
+        float: left;
+        width: 20px;
+        height: 40px;
+        margin: 0 14px;
+      }
+
+      label {
+        display: block;
+        float: left;
+        width: 315px;
+        margin: 0 8px 0 0;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      span {
+        display: flex;
+        position: relative;
+        float: right;
+        height: 40px;
+        align-items: center;
+      }
+
+      &:hover {
+        background-color: $color-tints-royal-blue-30;
+      }
+    }
+  }
+
+  label {
+    display: inline-block;
+    width: 372px;
+    height: 40px;
+    line-height: 40px;
+    margin: 0 8px 8px 8px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    &:last-child {
+      margin-bottom: 0px;
+    }
+  }
 }

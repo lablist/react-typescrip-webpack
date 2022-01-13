@@ -1,12 +1,12 @@
 import _ from 'lodash';
-import React, {useEffect} from 'react';
+import React, {useEffect, Fragment} from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import useLocalStorage from '../../helpers/useLocalStorage';
 import useGetSizeName from '../../helpers/useGetSizeName';
-import Navbar from '../../components/navbar';
+import {Navbar, If} from '../../components';
+import Login from "../../routes/login";
 
 const App: React.FC = () => {
-  const navigate = useNavigate();
   const [user, setUser, deleteUser] = useLocalStorage('user', {
     id: '',
     login: '',
@@ -15,19 +15,18 @@ const App: React.FC = () => {
   });
   const [ sizeName ] = useGetSizeName();
 
-  useEffect(() => {
-    if (!user?.token) {
-      navigate("/login");
-    }
-  }, []);
-
   return (
-    <div className={`app-list ${sizeName}`}>
-      <Navbar/>
-      <main className="app-content">
-        <Outlet/>
-      </main>
-    </div>
+    <Fragment>
+      <If condition={user?.token}>
+        <div className={`app-list ${sizeName}`}>
+          <Navbar/>
+          <main className="app-content">
+            <Outlet/>
+          </main>
+        </div>
+      </If>
+      {!user?.token && <Login/>}
+    </Fragment>
   );
 };
 

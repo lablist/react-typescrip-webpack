@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, Fragment, useRef } from "react";
 import _ from "lodash";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate, NavLink } from "react-router-dom";
 import { getQuery, patchQueryFormData } from "../../api/service";
 import useLocalStorage from '../../helpers/useLocalStorage';
 import rights from "../../helpers/rights";
@@ -34,9 +34,9 @@ export default function User() {
     photo: '',
     token: ''
   });
-  const url = new URL(window.location.href);
-  const userId = parseInt(url.searchParams.get("userId"), 10);
-  const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+  const userId = parseInt(searchParams.get('userId'), 10);
 
   const [curUser, setCurUser] = useState<iUser>();
   const [newUser, setNewUser] = useState<iUser>();
@@ -87,7 +87,7 @@ export default function User() {
 
   return (
     <div id="user">
-      <a href="#" onClick={()=>navigate("/users")}>Пользователи</a>
+      <NavLink to="/users">Пользователи</NavLink>
       <h4>Редактирование пользователя:</h4>
       <form action="#" >
         <div className="row user-form">

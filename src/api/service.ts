@@ -1,7 +1,7 @@
 import _ from "lodash";
 import axios from "axios";
 
-const baseURL = "http://localhost:8626";
+const baseURL = "http://localhost:8626/api";
 
 const instance = axios.create({
   baseURL: baseURL,
@@ -32,9 +32,8 @@ const iErr = (error) => {
     console.error("Ошибка в ответе сервера:", srvErrMsg);
   }
 
-  if (error.response.status === 401) {
+  if (error?.response?.status === 401) {
     localStorage.removeItem("user");
-    window.location.href = '/';
     return Promise.reject(srvErrMsg);
   }
 

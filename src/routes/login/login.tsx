@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../../helpers/useLocalStorage';
+import { useToast } from '../../contexts/toast';
 import _ from "lodash";
 import { postQuery } from "../../api/service";
 import "./login.scss";
@@ -15,7 +16,12 @@ export default function Login() {
   const navigate = useNavigate();
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
+  const { addToast } = useToast();
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    console.log("submission prevented");
+  };
 
   const doLogin = () => {
     postQuery("/users/login", "", {
@@ -23,9 +29,9 @@ export default function Login() {
       "password": password
     }).then((data)=>{
       setUser(data);
-      navigate("/");
+   //   navigate("/");
     }).catch((errMsg)=>{
-      setErrorMsg(errMsg);
+      //addToast(errMsg)
     });
   }
 
@@ -33,7 +39,7 @@ export default function Login() {
     <div id="login-page">
       <div className="content">
         <div className="login-container">
-          <form className="login-form">
+          <form className="login-form" onSubmit={onSubmit}>
             <h5>Управление контентом</h5>
             <div className="inputs">
               <div className="input-container">
@@ -50,7 +56,6 @@ export default function Login() {
                 <input type="password" placeholder="Пароль" onChange={({target}) => setPassword(target.value)} required/>
                 </div>
               </div>
-              {errorMsg ? <div className="error" title={errorMsg}>{errorMsg}</div> : null}
             </div>
             <a href="#" className="button primary" onClick={doLogin}>Войти</a>
           </form>

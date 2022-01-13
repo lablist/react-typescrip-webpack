@@ -26,6 +26,7 @@ $loginWidth: 600px;
     .login-container {
       display: flex;
       flex: 1 0 50%;
+      flex-flow: column nowrap;
       align-items: center;
       justify-content: center;
 
