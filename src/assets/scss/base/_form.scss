@@ -1,0 +1,166 @@
+/* Form */
+
+form {
+  margin: 0 0 $size-element-margin 0;
+}
+
+label {
+  color: $color-base;
+  display: block;
+  font-size: 0.9em;
+  font-weight: normal;
+  margin: 0 0 ($size-element-margin * 0.5) 0;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="search"],
+input[type="url"],
+select,
+textarea {
+  appearance: none;
+  background: $color-gray-light;
+  border-radius: $size-border-radius;
+  border: none;
+  border: solid 1px $color-gray-lighter;
+  color: inherit;
+  display: block;
+  outline: 0;
+  padding: 0 1em;
+  text-decoration: none;
+  width: 100%;
+
+  &:invalid {
+    box-shadow: none;
+  }
+
+  &:focus {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 1px $color-primary;
+  }
+}
+
+select {
+  background-size: 1.25em;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 1em) center;
+  height: $size-element-height;
+  padding-right: $size-element-height;
+  text-overflow: ellipsis;
+
+  &:before {
+    width: 60px;
+    height: 30px;
+    font-family: "icomoon" !important;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    content: "\ea58";
+    color: rgb(0, 87, 184);
+  }
+
+  option {
+    color: $color-base;
+    background: $color-gray-light;
+  }
+
+  &:focus {
+    &::-ms-value {
+      background-color: transparent;
+    }
+  }
+
+  &::-ms-expand {
+    display: none;
+  }
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="search"],
+input[type="url"],
+select {
+  height: $size-element-height;
+}
+
+textarea {
+  padding: 0.75em 1em;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  appearance: none;
+  display: block;
+  float: left;
+  margin-right: -2em;
+  opacity: 0;
+  width: 1em;
+  z-index: -1;
+
+  & + label {
+    color: $color-base;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1em;
+    font-weight: _font(weight);
+    padding-left: ($size-element-height * 0.6) + 0.75em;
+    padding-right: 0.75em;
+    position: relative;
+
+    &:before {
+      font-family: "icomoon" !important;
+      background: $color-gray-light;
+      border-radius: $size-border-radius;
+      border: solid 1px $size-border-radius;
+      content: '';
+      display: inline-block;
+      font-size: 0.8em;
+      height: ($size-element-height * 0.75);
+      left: 0;
+      line-height: ($size-element-height * 0.75);
+      position: absolute;
+      text-align: center;
+      top: 0;
+      width: ($size-element-height * 0.75);
+    }
+  }
+
+  &:checked + label {
+    &:before {
+      font-family: "icomoon" !important;
+      background: $color-gray-light;
+      border-color: $color-gray-lighter;
+      color: $color-base;
+      content: "\f00c";
+    }
+  }
+
+  &:focus + label {
+    &:before {
+      border-color: $color-gray-lighter;
+      box-shadow: 0 0 0 1px $color-gray-lighter;
+    }
+  }
+}
+
+input[type="checkbox"] {
+  & + label {
+    &:before {
+      border-radius: $size-border-radius;
+    }
+  }
+}
+
+input[type="radio"] {
+  & + label {
+    &:before {
+      border-radius: 100%;
+    }
+  }
+}

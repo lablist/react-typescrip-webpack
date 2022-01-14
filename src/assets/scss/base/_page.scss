@@ -21,32 +21,6 @@ menu {
   opacity: 0.3;
 }
 
-.button {
-  user-select: none;
-  border: none;
-  display: inline-block;
-  outline: 0;
-  padding: 8px 16px;
-  vertical-align: middle;
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-  background-color: inherit;
-  text-align: center;
-  cursor: pointer;
-  white-space: nowrap;
-
-  &:hover {
-    cursor: not-allowed;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.3;
-  }
-}
-
 .dropdown {
   &:hover {
     position: relative;

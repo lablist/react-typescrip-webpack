@@ -8,5 +8,10 @@ export default [
     link: '/users',
     caption: 'Пользователи',
     icon: 'icon-person'
+  },
+  {
+    link: '/organization',
+    caption: 'Организация',
+    icon: 'icon-person'
   }
 ];

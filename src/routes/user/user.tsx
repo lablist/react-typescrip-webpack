@@ -85,11 +85,15 @@ export default function User() {
     setNewUser((prev)=>({...prev, active: isChecked}))
   }
 
+  const onSubmit = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <div id="user">
       <NavLink to="/users">Пользователи</NavLink>
       <h4>Редактирование пользователя:</h4>
-      <form action="#" >
+      <form action="#" onSubmit={onSubmit}>
         <div className="row user-form">
           <div className="col-2">
             <span className="image fit">
@@ -107,13 +111,13 @@ export default function User() {
             </div>
             <div className="row user-form">
               { user.id === curUser?.id && <div className="col-5"><label htmlFor="user-oldPassword">Прежний пароль:</label> <input
-                  type="password" name="user-oldPassword" value={newUser?.oldPassword} placeholder="Прежний пароль"
+                  type="password" name="user-oldPassword" value={newUser?.oldPassword ? newUser.oldPassword : ""} placeholder="Прежний пароль"
                   onChange={({target: {value}})=>setNewUser((prev)=>({...prev, oldPassword: value}))}
                 /></div>
               }
               <div className="col-5">
                 <label htmlFor="user-newPassword">Новый пароль:</label>
-                <input type="password" name="user-newPassword" value={newUser?.newPassword} placeholder="Новый пароль"
+                <input type="password" name="user-newPassword" value={newUser?.newPassword ? newUser.newPassword : ""} placeholder="Новый пароль"
                   onChange={({target: {value}})=>setNewUser((prev)=>({...prev, newPassword: value}))}
                 />
               </div>
@@ -132,13 +136,13 @@ export default function User() {
         <div className="row user-form">
           <div className="col-6">
             <label htmlFor="user-login">Логин:</label>
-            <input type="text" name="user-login" value={newUser?.login} placeholder="Логин"
+            <input type="text" name="user-login" value={newUser?.login ? newUser.login : ""} placeholder="Логин"
               onChange={({target: {value}})=>setNewUser((prev)=>({...prev, login: value}))}
             />
           </div>
           <div className="col-6">
             <label htmlFor="user-email">Адрес электронной почты:</label>
-            <input type="text" name="user-email" value={newUser?.email} placeholder="Адрес электронной почты"
+            <input type="text" name="user-email" value={newUser?.email ? newUser.email : ""} placeholder="Адрес электронной почты"
               onChange={({target: {value}})=>setNewUser((prev)=>({...prev, email: value}))}
             />
           </div>
@@ -146,19 +150,19 @@ export default function User() {
         <div className="row user-form">
           <div className="col-4">
             <label htmlFor="user-firstname">Имя:</label>
-            <input type="text" name="user-firstname" value={newUser?.firstname} placeholder="Имя"
+            <input type="text" name="user-firstname" value={newUser?.firstname ? newUser.firstname : ""} placeholder="Имя"
               onChange={({target: {value}})=>setNewUser((prev)=>({...prev, firstname: value}))}
             />
           </div>
           <div className="col-4">
             <label htmlFor="user-lastname">Фамилия:</label>
-            <input type="text" name="user-lastname" value={newUser?.lastname} placeholder="Фамилия"
+            <input type="text" name="user-lastname" value={newUser?.lastname ? newUser.lastname : ""} placeholder="Фамилия"
               onChange={({target: {value}})=>setNewUser((prev)=>({...prev, lastname: value}))}
             />
           </div>
           <div className="col-4">
             <label htmlFor="user-middlename">Отчество:</label>
-            <input type="text" name="user-middlename" value={newUser?.middlename} placeholder="Отчество"
+            <input type="text" name="user-middlename" value={newUser?.middlename ? newUser.middlename : ""} placeholder="Отчество"
               onChange={({target: {value}})=>setNewUser((prev)=>({...prev, middlename: value}))}
             />
           </div>
@@ -166,26 +170,26 @@ export default function User() {
         <div className="row user-form">
           <div className="col-12">
             <label htmlFor="user-description">Описание:</label>
-            <textarea name="user-description" value={newUser?.description} placeholder="Описание"
+            <textarea name="user-description" value={newUser?.description ? newUser.description : ""} placeholder="Описание"
               onChange={({target: {value}})=>setNewUser((prev)=>({...prev, description: value}))}
             />
           </div>
         </div>
         <div className="row user-form">
           <div className="col-3">
-            <Checkbox name="user-admin" checked={_.includes(newUser?.rights, "1")} onChange={checkboxAdmin}>
+            <Checkbox name="user-admin" checked={_.includes(newUser?.rights ? newUser.rights : [], "1")} onChange={checkboxAdmin}>
               {rights["1"]}
             </Checkbox>
           </div>
           <div className="col-3">
-            <Checkbox name="user-guest" checked={_.includes(newUser?.rights, "2")} onChange={checkboxGuest}>
+            <Checkbox name="user-guest" checked={_.includes(newUser?.rights ? newUser.rights : [], "2")} onChange={checkboxGuest}>
               {rights["2"]}
             </Checkbox>
           </div>
         </div>
         <div className="row user-form">
           <div className="col-3">
-            <Checkbox name="user-guest" checked={newUser?.active} onChange={checkboxActive}>
+            <Checkbox name="user-guest" checked={newUser?.active ? newUser.active : false} onChange={checkboxActive}>
               Активный
             </Checkbox>
           </div>

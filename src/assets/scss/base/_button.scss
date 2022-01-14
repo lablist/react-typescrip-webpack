@@ -1,0 +1,40 @@
+input[type=submit],
+input[type=reset],
+input[type=button],
+button,
+.button {
+  appearance: none;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  background-color: transparent;
+  border-radius: 0.375em;
+  border: 0;
+  box-shadow: inset 0 0 0 2px $color-primary;
+  color: $color-primary;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Roboto Slab", serif !important;
+  font-size: 0.8em;
+  font-weight: 700;
+  height: 3.5em;
+  letter-spacing: 0.075em;
+  line-height: 3.5em;
+  padding: 0 2.25em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+  
+  &:before {
+    font-family: "icomoon" !important;
+  }
+
+  &:hover {
+    color: $color-primary-darker;
+    box-shadow: 0 0 0 1px $color-primary;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+  }
+}

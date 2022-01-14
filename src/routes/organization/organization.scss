@@ -1,0 +1,15 @@
+@import '../../assets/scss/libs/vars';
+
+#organization {
+  display: block;
+  margin: 10px 0;
+
+  form {
+    margin: 0;
+    padding: 0;
+
+    label {
+      margin-right: 8px;
+    }
+  }
+}

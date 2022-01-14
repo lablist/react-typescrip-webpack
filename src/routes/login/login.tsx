@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../../helpers/useLocalStorage';
 import { useToast } from '../../contexts/toast';
 import _ from "lodash";
@@ -13,14 +12,12 @@ export default function Login() {
     email: '',
     token: ''
   });
-  const navigate = useNavigate();
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const { addToast } = useToast();
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log("submission prevented");
   };
 
   const doLogin = () => {
@@ -29,7 +26,6 @@ export default function Login() {
       "password": password
     }).then((data)=>{
       setUser(data);
-   //   navigate("/");
     }).catch((errMsg)=>{
       //addToast(errMsg)
     });

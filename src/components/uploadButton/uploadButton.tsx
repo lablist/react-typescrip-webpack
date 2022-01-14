@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import {isEmpty, get, map} from "lodash";
 
-const UploadButton = ({ children=null, icon, name="photo", className="button", value="", onChange=(i)=>{}, disabled=false, accept="image/*", getFiles=(i)=>{}, getSrc=(i)=>{} }) => {
+const UploadButton = ({ children=null, icon, name="photo", className="button", onChange=(i)=>{}, disabled=false, accept="image/*", getFiles=(i)=>{}, getSrc=(i)=>{} }) => {
   const [curFiles, setCurFiles] = useState([]);
   const [curUrls, setCurUrls] = useState([]);
-  const ref = useRef(null);
-
+  const ref = useRef(null)
   useEffect(() => {
     if (isEmpty(curFiles)) {
       return;
@@ -42,7 +41,6 @@ const UploadButton = ({ children=null, icon, name="photo", className="button", v
       {icon && <span className={icon} style={{marginRight: "0.5em"}}/>}
       <input
         ref={ref}
-        value={value}
         accept={accept}
         disabled={disabled}
         style={{ display: "none" }}

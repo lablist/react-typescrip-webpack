@@ -89,6 +89,10 @@ export const deleteQuery = (url, token?, params?, progressEvent?, cancelToken?) 
   return serverQuery("DELETE", url, token, {}, params, progressEvent, cancelToken);
 }
 
+export const patchQuery = (url, token?, fields?, progressEvent?, cancelToken?)=> {
+  return serverQuery("PATCH", url, token, {}, fields, progressEvent, cancelToken);
+}
+
 export const patchQueryFormData = (url, token?, fields?, progressEvent?, cancelToken?)=> {
   return instanceMultipart.patch(url, _objToForm(fields), {
     headers: {
