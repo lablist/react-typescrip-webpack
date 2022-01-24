@@ -34,6 +34,7 @@ const iErr = (error) => {
 
   if (error?.response?.status === 401) {
     localStorage.removeItem("user");
+    window.location.href = "/";
     return Promise.reject(srvErrMsg);
   }
 
@@ -95,6 +96,17 @@ export const patchQuery = (url, token?, fields?, progressEvent?, cancelToken?)=>
 
 export const patchQueryFormData = (url, token?, fields?, progressEvent?, cancelToken?)=> {
   return instanceMultipart.patch(url, _objToForm(fields), {
+    headers: {
+      "token": token,
+      "Content-Type": "multipart/form-data"
+    },
+    onUploadProgress: _getProgressEvent(progressEvent),
+    cancelToken: cancelToken
+  })
+}
+
+export const postQueryFormData = (url, token?, fields?, progressEvent?, cancelToken?)=> {
+  return instanceMultipart.post(url, _objToForm(fields), {
     headers: {
       "token": token,
       "Content-Type": "multipart/form-data"

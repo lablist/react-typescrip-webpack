@@ -4,20 +4,30 @@ menu {
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;
-    background-color: $color-gray-lightest
+    background: none;
+
+    &:hover {
+      background-color: rgba(206,206,206,38%);
+    }
   }
 
   &::-webkit-scrollbar-corner {
-    border-color: transparent;
+    border: none;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: $color-gray-lighter;
+    background-color: rgba(206,206,206,38%);
+    border: 1px solid rgba(206,206,206,62%);
+
+    &:hover {
+      background-color: rgba(166,166,166,38%);
+      border: 1px solid rgba(166,166,166,62%);
+    }
   }
 
   &::-webkit-scrollbar-track,
   &::-webkit-scrollbar-corner {
-    background-color: transparent;
+    background: none;
   }
 
   &::-webkit-scrollbar-thumb,

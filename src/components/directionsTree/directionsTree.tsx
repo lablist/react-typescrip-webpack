@@ -1,128 +1,115 @@
-import React, { Fragment, useState, useEffect, useMemo } from "react";
+import React, { Fragment, useState, useEffect, useCallback, memo } from "react";
+import { DragDropContext, Draggable, Droppable, DropResult, resetServerContext, ResponderProvided } from "react-beautiful-dnd";
+import "./directionsTree.scss";
 
-const initialDnDState = {
-  draggedFrom: null,
-  draggedTo: null,
-  isDragging: false,
-  originalOrder: [],
-  updatedOrder: [],
-};
+const nodeIdName = "id_direction";
 
-const DirectionsTree = ({value=[], pid=0}) => {
+const notFilledArray = (v)=> (!Array.isArray(v) || (Array.isArray(v)  && v.length === 0));
+
+const WrappedDirectionsTree = ({value=[], readOnly=false, getValue=(newTree)=>{}, getActive=(curActive)=>{}}) => {
   const [dTree, setDTree] = useState([]);
-  const [dragAndDrop, setDragAndDrop] = useState(initialDnDState);
+  const [active, setActive] = useState("");
 
   useEffect(() => {
-    console.log("value", value);
+    if (dTree === value) {
+      return;
+    }
     setDTree(value);
   }, [value]);
 
-  const nodes = useMemo(()=>(dTree.filter((l)=>{return Number(l.parent_id) === 0}).sort((a,b)=>(Number(a.rate) - Number(b.rate)))), [dTree]);
-
-  const onDragStart = (event) => {
-    const initialPosition = Number(event.currentTarget.dataset.position);
-
-    setDragAndDrop({
-      ...dragAndDrop,
-      draggedFrom: initialPosition,
-      isDragging: true,
-      originalOrder: dTree,
-    });
-    event.dataTransfer.setData("text/html", "");
-  };
-
-  const onDragOver = (event) => {
-    event.preventDefault();
-
-    let newDTree = dragAndDrop.originalOrder;
-
-    const draggedFrom = dragAndDrop.draggedFrom;
-    const draggedTo = Number(event.currentTarget.dataset.position);
-
-    const itemDragged = newDTree[draggedFrom];
-
-    const remainingItems = newDTree.filter(
-      (item, index) => index !== draggedFrom
-    );
-
-    newDTree = [
-      ...remainingItems.slice(0, draggedTo),
-      itemDragged,
-      ...remainingItems.slice(draggedTo),
-    ];
-
-    if (draggedTo !== dragAndDrop.draggedTo) {
-      setDragAndDrop({
-        ...dragAndDrop,
-        updatedOrder: newDTree,
-        draggedTo: draggedTo,
-      });
+  useEffect(() => {
+    if (dTree === value) {
+      return;
     }
-  };
+    getValue(dTree);
+  }, [dTree]);
 
-  const onDrop = (event) => {
-    setDTree(dragAndDrop.updatedOrder);
+  useEffect(() => {
+    getActive(active);
+  }, [active]);
 
-    setDragAndDrop({
-      ...dragAndDrop,
-      draggedFrom: null,
-      draggedTo: null,
-      isDragging: false,
-    });
-  };
+  const getNodes = useCallback((pid="0")=> (
+    dTree.filter((l)=>{return Number(l.parent_id) === Number(pid)}).sort((a,b)=>(Number(a.rate) - Number(b.rate)))
+  ), [dTree]);
 
-  const onDragLeave = () => {
-    setDragAndDrop({
-      ...dragAndDrop,
-      draggedTo: null,
-    });
-  };
-
-  const clickColumnVisibleCallback = (columnKey) => {
+  const onDragEnd = (result: DropResult, provided: ResponderProvided) => {
+    if (readOnly || result.combine || !result.destination) {
+      return;
+    }
+    const startPos = result.source.index + 1;
+    const endPos = result.destination.index + 1;
+    if (startPos === endPos) {
+      return;
+    }
+    const pid = result.type;
     setDTree((prev) => {
-      const index = prev.findIndex((el) => el.accessor === columnKey);
-      const visible = prev[index].visible;
-      const newArr = [...prev];
-      newArr[index].visible = !visible;
-      return newArr;
-    });
-  };
-
-  const clickApply = () => {
-  };
-
-  
-  const renderTree = (leafs) => {
-    if (nodes.length === 0) {
-      return null;
-    }
-
-    console.log("nodes", nodes);
-    return nodes.map((element, index) => {
-      return (
-        <div
-          key={index}
-          data-position={index}
-          draggable
-          onDragStart={onDragStart}
-          onDragOver={onDragOver}
-          onDrop={onDrop}
-          onDragLeave={onDragLeave}
-          className={`column-row ${
-            dragAndDrop && dragAndDrop.draggedTo === Number(index)
-              ? "dropArea"
-              : ""
-          }`}
-        >
-          <label>{element.direction_name}</label>
-          <span></span>
-        </div>
-      );
+      const nodes = getNodes(pid);
+      const startId = nodes.find(i => i.rate == startPos)[nodeIdName];
+      const endId = nodes.find(i => i.rate == endPos)[nodeIdName];
+      const newDTree = Array.from(prev);
+      const startIndex = newDTree.findIndex(i => i[nodeIdName] == startId);
+      const endIndex = newDTree.findIndex(i => i[nodeIdName] == endId);
+      newDTree[startIndex].rate = endPos;
+      newDTree[endIndex].rate = startPos;
+      return newDTree;
     });
   }
-  
-  return (<Fragment>{renderTree(dTree)}</Fragment>);
+
+  const switchActive = (newId) => {
+    setActive((prev)=>{
+      return prev !== newId ? newId : ""
+    })
+  }
+
+  const draggableChild = (provided, snapshot, node, nodeIndex) => (
+    <p ref={provided.innerRef}
+      onClick={()=>switchActive(node[nodeIdName])}
+      {...provided.draggableProps}
+      className={`direction-node ${snapshot.isDragging ? "dragging" : ""} ${(active === node[nodeIdName]) ? "active" : ""}`}
+      style={...provided?.draggableProps?.style}>
+        {node.human_name}<span title={node.rate} {...provided.dragHandleProps} className="icon-drag_indicator"></span>
+    </p>
+  );
+
+  function droppableChild(node, nodeIndex) {
+    const nodeId = node[nodeIdName];
+    const subNodes = getNodes(node[nodeIdName]);
+    return (<Fragment key={node[nodeIdName]}>
+      <Draggable key={`draggable-${nodeId}-${nodeIndex}`} draggableId={`draggable-${nodeId}`} index={nodeIndex}>
+        {(provided, snapshot) => draggableChild(provided, snapshot, node, nodeIndex)}
+      </Draggable>
+      {!notFilledArray(subNodes) && <Droppable droppableId={`droppable-${nodeId}`} type={nodeId} key={nodeId} ignoreContainerClipping={false} isCombineEnabled={true}>
+        {(provided, snapshot) => droppableChildren(provided, snapshot, subNodes, nodeId)}
+      </Droppable>}
+      </Fragment>)
+  };
+
+  function droppableChildren(provided, snapshot, nodes, nodeId) {
+    return (
+      <div ref={provided.innerRef}
+      id="directions-tree" className={`direction direction-${nodeId} ${snapshot.isDraggingOver ? "dragging-over" : ""} ${snapshot.draggingFromThisWith ? "dragging-with" : ""}`}
+      {...provided.droppableProps}>
+        {nodes.map((node, nodeIndex) => droppableChild(node, nodeIndex))}
+        {provided.placeholder}
+      </div>
+    );
+  };
+
+  const rootNodes = getNodes();
+  if (notFilledArray(rootNodes)) {
+    return null;
+  };
+
+  return (<DragDropContext
+    onDragEnd={onDragEnd}>
+      <Droppable droppableId="droppable" type="0" key="root" ignoreContainerClipping={false} isCombineEnabled={true}>
+        {(provided, snapshot)=>droppableChildren(provided, snapshot, rootNodes, "0")}
+      </Droppable>
+    </DragDropContext>);
 };
+
+resetServerContext();
+const DirectionsTree = memo(WrappedDirectionsTree);
 
 export default DirectionsTree;
 

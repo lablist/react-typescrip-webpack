@@ -1,0 +1,21 @@
+@import '../../assets/scss/libs/vars';
+
+#directions-tree {
+  .direction {
+    padding: 0 0 0 1.33333em;
+  }
+
+  p {
+    font-weight: normal;
+    cursor: pointer;
+    margin: 0;
+
+    &.active {
+      color: $color-secondary;
+    }
+
+    span {
+      cursor: move;
+    }
+  }
+}
