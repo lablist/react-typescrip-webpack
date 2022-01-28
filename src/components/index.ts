@@ -5,6 +5,8 @@ import Checkbox from './checkbox';
 import ToastContainer from './toastContainer';
 import If from './iF';
 import DirectionsTree from './directionsTree';
+import TextEditor from './textEditor';
+import ToolPanel from './toolPanel';
 
 export {
   Navbar,
@@ -13,5 +15,7 @@ export {
   Checkbox,
   ToastContainer,
   If,
-  DirectionsTree
+  DirectionsTree,
+  TextEditor,
+  ToolPanel
 };

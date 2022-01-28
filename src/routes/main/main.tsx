@@ -1,7 +1,8 @@
 import React, { useEffect, useCallback, useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import _ from "lodash";
 import useLocalStorage from "../../helpers/useLocalStorage";
-import { getQuery, postQuery } from "../../api/service";
+import { getQuery, postQuery, deleteQuery, putQuery } from "../../api/service";
 import { DirectionsTree, Checkbox } from "../../components";
 
 const nodeIdName = "id_direction";
@@ -20,6 +21,7 @@ const newDirection = {
 };
 
 export default function Main() {
+  const navigate = useNavigate();
   const [user, setUser, deleteUser] = useLocalStorage("user", {});
   const [srvMsg, setSrvMsg] = useState("");
   const [directions, setDirections] = useState([]);
@@ -27,13 +29,13 @@ export default function Main() {
   const [activeDirectionIndex, setActiveDirectionIndex] = useState(-1);
   const [activeDirectionId, setActiveDirectionId] = useState("");
 
+  const getDirections = () => {
+    getQuery("/directions/read",  user.token).then((data:any=[])=>{
+      setDirections(data);
+    });
+  }
+
   useEffect(() => {
-    const getDirections = () => {
-      getQuery("/directions/read",  user.token).then((data:any=[])=>{
-        console.log();
-        setDirections(data);
-      });
-    }
     const getDirectionsTypes = () => {
       getQuery("/directionsTypes/read",  user.token).then((data:any=[])=>{
         setDirectionsTypes(data);
@@ -48,7 +50,7 @@ export default function Main() {
   }, [activeDirectionId, directions]);
 
   const activeDirection = useMemo(() => {
-    if (activeDirectionIndex > 0) {
+    if (activeDirectionIndex >= 0) {
       return directions[activeDirectionIndex];
     }
     return newDirection;
@@ -71,29 +73,58 @@ export default function Main() {
       newDirections[activeDirectionIndex][k] = v;
       return newDirections;
     })
-  }, [activeDirectionIndex])
+  }, [activeDirectionIndex]);
 
-  const addNewDirectory =  useCallback(() => {
+  const saveDirectories =  useCallback((isParentId=false, isSave=false) => {
     postQuery("/directions/update", user.token, {
-      directions: directions
-      
-    }).then((data)=>{
-      console.log("data", data);
+      directions: directions,
+      id: isSave ? '' : activeDirectionId,
+      isParentId: isParentId
+    }).then(()=>{
+      getDirections();
+    }).catch((errMsg)=>{
+      getDirections();
+      setSrvMsg(errMsg)
+    });
+  }, [activeDirectionId, directions]);
+
+  const deleteDirectory =  useCallback(() => {
+    deleteQuery("/directions/delete", user.token, {
+      id: activeDirectionId
+    }).then(()=>{
+      getDirections();
     }).catch((errMsg)=>{
       setSrvMsg(errMsg)
     });
-  }, [activeDirectionIndex])
+  }, [activeDirectionId]);
 
-  const addNewSubDirectory =  useCallback(() => {
-    postQuery("/directions/update", user.token, {
-      directions: directions
-      
-    }).then((data)=>{
-      console.log("data", data);
-    }).catch((errMsg)=>{
-      setSrvMsg(errMsg)
-    });
-  }, [activeDirectionIndex])
+  const hiddenClass = useMemo(() => {
+    if (!activeDirectionId) {
+      return "disabled";
+    }
+    return "";
+  }, [activeDirectionId]);
+
+  const editPage = useCallback(() => {
+    if (activeDirection?.page_id) {
+      getQuery("/pages/read", user.token, {
+        id: activeDirection?.page_id,
+        did: activeDirection?.id_direction
+      }).then((r)=>{
+        navigate(`page?id=${r.id}`);
+      }).catch((errMsg)=>{
+        setSrvMsg(errMsg)
+      });
+    } else {
+      putQuery("/pages/create", user.token, {
+        did: activeDirection?.id_direction
+      }).then((r)=>{
+        navigate(`page?id=${r.id}`);
+      }).catch((errMsg)=>{
+        setSrvMsg(errMsg)
+      });
+    }
+  }, [activeDirection]);
 
   return (
     <div id="#main-page">
@@ -101,11 +132,20 @@ export default function Main() {
       <div className="row user-form">
         <div className="col-6">
           <DirectionsTree value={directions} getActive={setActiveDirectionId}/>
+          <div className="row user-form"></div>
           <div className="row user-form">
-            <div className="col-6">
-              <button className="button primary icon-create_new_folder" onClick={addNewDirectory} title="Сохранить и создать новый пункт"></button>
-              <button className="button primary icon-subdirectory_arrow_right icon-create_new_folder" onClick={addNewSubDirectory} title="Сохранить и создать новый подпункт"></button>
-              </div>
+            <div className="col-2">
+              <button className={`button primary ${hiddenClass} icon-add`} onClick={()=>saveDirectories()} title="Сохранить и создать новый пункт"></button>
+            </div>
+            <div className="col-2">
+              <button className={`button primary ${hiddenClass} icon-subdirectory_arrow_right`} onClick={()=>saveDirectories(true)} title="Сохранить и создать новый подпункт"></button>
+            </div>
+            <div className="col-2">
+              <button className={`button primary ${hiddenClass} icon-delete`} onClick={()=>deleteDirectory()} title="Удалить пункт"></button>
+            </div>
+            <div className="col-2">
+              <button className={`button primary icon-save`} onClick={()=>saveDirectories(false, true)} title="Сохранить"></button>
+            </div>
           </div>
         </div>
         <div className="col-6">
@@ -130,9 +170,12 @@ export default function Main() {
             </select>
           </div>
           <div className="row user-form">
-            <Checkbox name="direction-active" checked={activeDirection["active"]} onChange={(isChecked)=>setActiveDirection("active", isChecked)}>
+            <Checkbox name="direction-active" className="col-3" checked={activeDirection["active"]} onChange={(isChecked)=>setActiveDirection("active", isChecked)}>
               Активный
             </Checkbox>
+            <div className="col-9">
+              <button className={`button primary ${hiddenClass} icon-create`} onClick={()=>editPage()} title="Редактировать страницу">Редактировать</button>
+            </div>
           </div>
           <div className="row user-form">
             <label htmlFor="user-description">Описание <i>description</i>:</label>
@@ -154,7 +197,7 @@ export default function Main() {
           </div>
         </div>
       </div>
-      <button className="button primary icon-save" onClick={generateAll}>Создать сайт</button>
+      <button className="button primary icon-build" onClick={generateAll}>Создать сайт</button>
     </div>
   );
 }

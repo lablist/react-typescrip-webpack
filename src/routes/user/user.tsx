@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, Fragment, useRef } from "react";
 import _ from "lodash";
 import { useSearchParams, useNavigate, NavLink } from "react-router-dom";
-import { getQuery, patchQueryFormData } from "../../api/service";
+import { getQuery, patchQueryFormData, putQueryFormData } from "../../api/service";
 import useLocalStorage from '../../helpers/useLocalStorage';
 import rights from "../../helpers/rights";
 import UploadButton from "../../components/uploadButton";
@@ -27,6 +27,7 @@ interface iUser
 }
 
 export default function User() {
+  const navigate = useNavigate();
   const [user, setUser, deleteUser] = useLocalStorage('user', {
     id: '',
     login: '',
@@ -44,6 +45,9 @@ export default function User() {
   const [errMsg, setErrMsg] = useState("");
 
   useEffect(() => {
+    if (!userId) {
+      return;
+    }
     const getUsers = () => {
       getQuery("/users/read",  user.token, {id: userId}).then((data:any)=>{
         if (!_.isUndefined(data)) {
@@ -53,11 +57,22 @@ export default function User() {
       });
     }
     getUsers();
-  }, []);
+  }, [userId]);
 
   const photoSrc = useMemo(() => _.isEmpty(newPhoto) ? `../${curUser?.photo}` : newPhoto, [newPhoto, curUser?.photo])
 
   const doSave = ()=> {
+    if (!userId) {
+      putQueryFormData("/users/create", user.token, newUser).then((data:any)=>{
+        if (!_.isUndefined(data)) {
+          navigate(`/user?userId=${data.id}`);
+        }
+      }).catch((err)=>{
+        setErrMsg(err)
+      });
+      return
+    }
+
     patchQueryFormData("/users/update", user.token, newUser).then((data:any)=>{
       if (!_.isUndefined(data)) {
         setCurUser(data);
@@ -71,6 +86,7 @@ export default function User() {
     }).catch((err)=>{
       setErrMsg(err)
     });
+
   }
 
   const checkboxAdmin = (isChecked) => {
@@ -126,7 +142,7 @@ export default function User() {
         </div>
         <div className="row user-form">
           <div className="col-12">
-            <UploadButton icon="icon-file-image" name="photo" getFiles={(files)=>{
+            <UploadButton icon="icon-insert_photo" name="photo" getFiles={(files)=>{
               setNewUser((prev)=>({...prev, photo: _.first(files)}))
             }} getSrc={(imgs)=>{
               setNewPhoto(_.first(imgs))

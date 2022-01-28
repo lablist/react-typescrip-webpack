@@ -1,6 +1,9 @@
 import _ from "lodash";
 import React, { Fragment } from "react";
 import { Outlet } from "react-router-dom";
+import { StoreProvider } from '../../contexts/store';
+import { ToastProvider } from '../../contexts/toast';
+import { TextEditorProvider } from "../../contexts/textEditor";
 import useLocalStorage from "../../helpers/useLocalStorage";
 import useGetSizeName from "../../helpers/useGetSizeName";
 import { Navbar, If } from "../../components";
@@ -16,19 +19,23 @@ const App: React.FC = () => {
   const [ sizeName ] = useGetSizeName();
 
   return (
-    <Fragment>
-      <If condition={user?.token}>
-        <div className={`app-list ${sizeName}`}>
-          <Navbar/>
-          <main className="app-content">
-            <Outlet/>
-          </main>
-        </div>
-      </If>
-      <If condition={!user?.token}>
-        <Login/>
-      </If>
-    </Fragment>
+    <StoreProvider>
+      <ToastProvider>
+        <TextEditorProvider>
+          <If condition={user?.token}>
+            <div className={`app-list ${sizeName}`}>
+              <Navbar/>
+              <main className="app-content">
+                <Outlet/>
+              </main>
+            </div>
+          </If>
+          <If condition={!user?.token}>
+            <Login/>
+          </If>
+        </TextEditorProvider>
+      </ToastProvider>
+    </StoreProvider>
   );
 };
 

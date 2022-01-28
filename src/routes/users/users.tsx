@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react";
 import _ from "lodash";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { postQuery } from "../../api/service";
 import useLocalStorage from '../../helpers/useLocalStorage';
 import rights from "../../helpers/rights";
 
 export default function Users() {
+  const navigate = useNavigate();
   const [user, setUser, deleteUser] = useLocalStorage('user', {
     id: '',
     login: '',
@@ -42,10 +43,15 @@ export default function Users() {
 
   return (
     <div id="users">
+      <div className="row user-form"></div>
       <div className="row user-form">
         <div className="col-2 col-12-small">
+          <label htmlFor="user-create">Создать пользователя:</label>
+          <button name="user-create" className={`button primary icon-add`} onClick={()=>navigate(`/user`)} title="Создать">Создать</button>
+        </div>
+        <div className="col-2 col-12-small">
           <label htmlFor="user-limit">Показать по:</label>
-          <select name="user-limit"onChange={(event)=>{
+          <select name="user-limit" onChange={(event)=>{
             setPage(1);
             setLimit(parseInt(event?.target?.value, 10));
             }}>

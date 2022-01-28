@@ -72,7 +72,7 @@ const Navbar: React.FC = () => {
       <div className="sidebar-menu">
         {navs.map((navItem, index)=>{
           return <NavLink className={getNavLinkClassNames}
-        key={_.uniqueId(index)} to={`${navItem?.link}`} onClick={linkClick}>
+        key={_.uniqueId(`${index}`)} to={`${navItem?.link}`} onClick={linkClick}>
               <div className="sidebar-item-icon">
                 <span className={`${navItem?.icon}`}></span>
               </div>
