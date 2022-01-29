@@ -1,6 +1,8 @@
 import _ from "lodash";
 import axios from "axios";
 
+const adminPath = "adm";
+
 const baseURL = "http://localhost:8626/api";
 
 const instance: any = axios.create({
@@ -34,7 +36,7 @@ const iErr = (error) => {
 
   if (error?.response?.status === 401) {
     localStorage.removeItem("user");
-    window.location.href = "/";
+    window.location.href = `/${adminPath}`;
     return Promise.reject(srvErrMsg);
   }
 
