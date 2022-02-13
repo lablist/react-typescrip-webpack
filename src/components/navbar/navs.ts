@@ -13,5 +13,10 @@ export default [
     link: '/organization',
     caption: 'Организация',
     icon: 'icon-person'
+  },
+  {
+    link: '/prices',
+    caption: 'Цены',
+    icon: 'icon-person'
   }
 ];

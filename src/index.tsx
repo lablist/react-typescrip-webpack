@@ -11,6 +11,7 @@ import Main from "./routes/main";
 import User from "./routes/user";
 import Users from "./routes/users";
 import Page from "./routes/page";
+import Prices from "./routes/prices";
 import Organization from "./routes/organization";
 import PageNotFound from "./routes/pageNotFound";
 import "./assets/scss/main.scss";
@@ -27,6 +28,7 @@ render(
           <Route path="/users" element={<Users />} />
           <Route path="/user" element={<User />} />
           <Route path="/organization" element={<Organization />} />
+          <Route path="/prices" element={<Prices />} />
           <Route path="*" element={<PageNotFound/>} />
         </Route>
       </Routes>

@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import _ from "lodash";
 import useLocalStorage from "../../helpers/useLocalStorage";
-import { getQuery, postQuery, deleteQuery, putQuery } from "../../api/service";
+import { getQuery, postQuery, deleteQuery, putQuery, getFile } from "../../api/service";
 import { DirectionsTree, Checkbox } from "../../components";
 
 const nodeIdName = "id_direction";
@@ -62,6 +62,10 @@ export default function Main() {
     }).catch((errMsg)=>{
       setSrvMsg(errMsg)
     });
+  }
+
+  const backupDump = () => {
+    getFile("/backup/dump", user.token, "dump.tar");
   }
 
   const setActiveDirection = useCallback((k, v) => {
@@ -197,7 +201,8 @@ export default function Main() {
           </div>
         </div>
       </div>
-      <button className="button primary icon-build" onClick={generateAll}>Создать сайт</button>
+      <div className="row user-form"><button className="button primary icon-build" onClick={generateAll}>Создать сайт</button></div>
+      <div className="row user-form"><button className="button primary icon-build" onClick={backupDump}>Получить дамп БД</button></div>
     </div>
   );
 }
